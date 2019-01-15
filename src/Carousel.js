@@ -3,31 +3,45 @@ import React, { Component } from 'react';
 class Carousel extends Component {
   state = {
     photos: [],
-    active: 0
+    active: 0,
+    hero: ''
   };
 
-  static getDerivedStateFromProps({ media }) {
+  componentDidMount() {
+    const { media } = this.props;
+
     let photos = [];
+    let hero;
 
     if (media && media.photos && media.photos.photo) {
       photos = media.photos.photo.filter(photo => photo['@size'] === 'pn');
     }
 
-    return { photos };
+    if (photos.length) {
+      hero = photos[0].value;
+    } else {
+      hero = 'http://placecorgi.com/300/300';
+    }
+
+    this.setState({ photos, hero });
   }
 
   handleIndexClick = e => {
+    const { index } = e.target.dataset;
+    const hero = this.state.photos[index].value;
+
     this.setState({
-      active: e.target.dataset.index
+      active: index,
+      hero
     });
   };
 
   render() {
-    const { photos, active } = this.state;
+    const { photos, active, hero } = this.state;
 
     return (
       <div className="carousel">
-        <img src={photos[active].value} alt="primary animal" />
+        <img src={hero} alt="primary animal" />
         <div className="carousel-smaller">
           {photos.map((photo, index) => (
             /* eslint-disable-next-line */
