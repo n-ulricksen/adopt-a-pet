@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Router, Link } from '@reach/router';
+import { Router } from '@reach/router';
 import pf from 'petfinder-client';
 import { Provider } from './SearchContext';
 
+import Navbar from './Navbar';
 import Results from './Results';
 import Details from './Details';
 import SearchParams from './SearchParams';
@@ -77,14 +78,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <header>
-          <Link to="/">Adopt a Pet</Link>
-          <Link to="/search-params">
-            <span aria-label="search" role="img">
-              &#x1F50D;
-            </span>
-          </Link>
-        </header>
+        <Navbar />
         <Provider value={this.state}>
           <Router>
             <Results path="/" />
